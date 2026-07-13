@@ -1,4 +1,3 @@
-import { inject } from '@vercel/analytics'
 import type { RouteRecordRaw } from 'vue-router'
 import type { UserModule } from '~/types'
 import { createHead, VueHeadMixin } from '@unhead/vue/client'
@@ -6,9 +5,6 @@ import { setupLayouts } from 'virtual:generated-layouts'
 import { createRouter, createWebHistory } from 'vue-router'
 import { routes } from 'vue-router/auto-routes'
 import App from '~/App.vue'
-
-// Inject Vercel Web Analytics
-inject()
 
 import '@unocss/reset/tailwind.css'
 import 'uno.css'

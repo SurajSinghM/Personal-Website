@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Analytics } from '@vercel/analytics/vue'
+
 useHead({
   link: [
     {
@@ -13,6 +15,7 @@ useHead({
 <template>
   <div class="flex flex-col font-sans min-h-svh">
     <RouterView />
+    <Analytics />
   </div>
 </template>
 
