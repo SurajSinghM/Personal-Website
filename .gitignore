@@ -1,0 +1,11 @@
+*:Zone.Identifier
+.DS_Store
+.eslintcache
+.idea/
+.npm/
+.yarn/
+auto-imports.d.ts
+components.d.ts
+dist/
+node_modules/
+vite.config.ts.timestamp-*

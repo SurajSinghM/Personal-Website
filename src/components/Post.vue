@@ -1,0 +1,98 @@
+<script setup lang='ts'>
+const { frontmatter } = defineProps({
+  frontmatter: {
+    type: Object,
+    required: true,
+  },
+})
+const router = useRouter()
+const content = ref<HTMLDivElement>()
+let navigateTimeoutId: ReturnType<typeof setTimeout> | null = null
+
+onMounted(() => {
+  const navigate = () => {
+    if (location.hash) {
+      document.querySelector(decodeURIComponent(location.hash))
+        ?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+  const handleAnchors = (
+    event: MouseEvent & { target: HTMLElement },
+  ) => {
+    const link = event.target.closest('a')
+    if (
+      !event.defaultPrevented
+      && link
+      && event.button === 0
+      && link.target !== '_blank'
+      && link.rel !== 'external'
+      && !link.download
+      && !event.metaKey
+      && !event.ctrlKey
+      && !event.shiftKey
+      && !event.altKey
+    ) {
+      const url = new URL(link.href)
+      if (url.origin !== window.location.origin)
+        return
+      event.preventDefault()
+      const { pathname, hash } = url
+      if (hash && (!pathname || pathname === location.pathname)) {
+        window.history.replaceState({}, '', hash)
+        navigate()
+      }
+      else {
+        router.push({ path: pathname, hash })
+      }
+    }
+  }
+  useEventListener(window, 'hashchange', navigate)
+  useEventListener(content.value!, 'click', handleAnchors, { passive: false })
+  navigate()
+  navigateTimeoutId = setTimeout(navigate, 500)
+})
+
+onUnmounted(() => {
+  if (navigateTimeoutId) {
+    clearTimeout(navigateTimeoutId)
+    navigateTimeoutId = null
+  }
+})
+</script>
+
+<template>
+  <div
+    v-if="frontmatter.display ?? frontmatter.title"
+    class="m-auto mb-8 prose"
+  >
+    <h1 class="mb-0">
+      {{ frontmatter.display ?? frontmatter.title }}
+    </h1>
+    <p
+      v-if="frontmatter.date"
+      class="op-50 !mt--2"
+    >
+      {{ formatDate(frontmatter.date) }} <span v-if="frontmatter.duration">· {{ frontmatter.duration }}</span>
+    </p>
+    <p
+      v-if="frontmatter.subtitle"
+      class="italic op-50 !mt--6"
+    >
+      {{ frontmatter.subtitle }}
+    </p>
+  </div>
+  <article ref="content">
+    <slot />
+  </article>
+  <div
+    v-if="$route.path !== '/'"
+    class="m-auto mb-8 mt-8 prose"
+  >
+    <router-link
+      :to="$route.path.split('/').slice(0, -1).join('/') || '/'"
+      class="font-mono no-underline op-50 hover:op-75"
+    >
+      cd ..
+    </router-link>
+  </div>
+</template>
