@@ -24,6 +24,7 @@
     "@shikijs/twoslash": "^3.21.0",
     "@unhead/vue": "^2.1.2",
     "@unocss/reset": "^66.5.12",
+    "@vercel/analytics": "^2.0.1",
     "@vitejs/plugin-vue": "^6.0.3",
     "@vueuse/core": "^14.1.0",
     "dayjs": "^1.11.19",
