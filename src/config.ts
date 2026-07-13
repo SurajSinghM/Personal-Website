@@ -1,7 +1,7 @@
 export const siteConfig = {
   title: 'Suraj Singh',
-  email: 'your-email@example.com',
-  github: 'your-github-username',
-  linkedin: 'your-linkedin-username',
-  siteUrl: 'https://personal-website.com',
+  email: 'surajsinghjob11@gmail.com',
+  github: 'SurajSinghM',
+  linkedin: 'surajmsingh',
+  siteUrl: 'https://surajsinghm.vercel.app',
 } as const
